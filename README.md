@@ -1,5 +1,5 @@
 # pineeye_pinephone_drivers
- Driver options for the PineEye
+ Driver options for the <a href="https://github.com/jnavarro7/pineeye_for_pinephone" title="PineEye">PineEye</a>
 
 ## Python
 

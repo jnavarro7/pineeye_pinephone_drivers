@@ -5,6 +5,8 @@
 
 Working on a python system that will read the sensor and display the values on the terminal. 
 
+![Example](/pictures/record.svg)
+
 ![alt tag](/pictures/1.jpg)
 
 Work in progress. 

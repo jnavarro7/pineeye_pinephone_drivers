@@ -1,20 +1,19 @@
 #!/bin/bash
 
 ##Script to prepare Manjaro for PinePhone to use with the PineEye
-##Installation log file "install_logs.txt" gets created in install_deps/logs/
+##Installation log file "log_file.txt" gets created in logs/
 
-logfile=logs/log_file.txt		#File to be used to log installation process
+mkdir -p logs/				#Directory to save logs
+logfile="logs/log_file.txt"		#File to be used to log installation process
 
 formatdate=$(date +"%m_%d_%Y_%R")
 date -u > $logfile
 
-#Prepare directories
-mkdir -p logs
 
 #Update and upgrade system packages
 function update_upgrade() { 	
   sudo pacman -Syy >> $logfile  	#Update repositories cache
-  sudo pacman -Syu -y >> $logfile  	#Upgrade packages
+#  sudo pacman -Syu -y >> $logfile  	#Upgrade packages
 }
 
 #Installation of Docker if using Baremetal
@@ -39,4 +38,6 @@ function isntall_python_tools() {
 
 
 #Appending date to logfile name
-mv $logfile ${logfile}_${date}
+mv $logfile ${logfile}_${formatdate}
+
+update_upgrade

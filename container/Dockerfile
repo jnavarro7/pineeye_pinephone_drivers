@@ -1,0 +1,1 @@
+FROM manjaro:latest

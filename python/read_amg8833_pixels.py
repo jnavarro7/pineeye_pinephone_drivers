@@ -57,23 +57,23 @@ def color_select(tempround):
 def readrows():
 	for i in rows:
 		for j in i:
-			val = bus.read_byte_data(i2c_address, j)	#Read pixels from AMG8833 sensor
-			valstr = str(val)		#Convert "val" to string
-			dec = int(valstr, 16)		#Convert Hexadecimal to decimal
-			temp = dec * 0.25		#Convert to Celcius degress
-			tempround = round(temp,1)	#Round temperature to a single decimal point
+			val = bus.read_byte_data(i2c_address, j)			#Read pixels from AMG8833 sensor
+			valstr = str(val)									#Convert "val" to string
+			dec = int(valstr, 16)								#Convert Hexadecimal to decimal
+			temp = dec * 0.25									#Convert to Celcius degress
+			tempround = round(temp,1)							#Round temperature to a single decimal point
 			#print(tempround,end = " ")
-			strtempround = str(tempround)	#Convert tempround to string
+			strtempround = str(tempround)						#Convert tempround to string
 			#print('\x1b[6;37;44m' + strtempround + '\x1b[0m',end = " ")
-			color = ""
-			color = color_select(tempround)	#Function to assign a color depending on the temperature
-			print(color + strtempround + '\x1b[0m',end = " ")			
+			color = ""											#Define "color" variable as empty
+			color = color_select(tempround)						#Function to assign a color depending on the temperature
+			print(color + strtempround + '\x1b[0m',end = " ")	#Prints temperature in Celcius degress and color we have assigned depending on its range		
 			time.sleep(0.001)
 		print()
 
 
-os.system("clear")
-while True:
+os.system("clear")			#Clean the terminal
+while True:					#Run sensor pixels read and display 
 	readrows()
 	time.sleep(0.3)
 	os.system("clear")

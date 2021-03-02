@@ -9,4 +9,6 @@ Working on a python system that will read the sensor and display the values on t
 
 ![alt tag](/pictures/1.jpg)
 
+![alt tag](/pictures/2.jpg)
+
 Work in progress. 

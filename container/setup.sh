@@ -1,14 +1,16 @@
 #!/bin/bash
+set -x
 
 ##Script to prepare Manjaro for PinePhone to use with the PineEye
-##Installation log file "log_file.txt" gets created in logs/
+##Installation log file "log_file" gets created in logs/
 
 mkdir -p logs/				#Directory to save logs
-logfile="logs/log_file.txt"		#File to be used to log installation process
+logfile="log_file"			#File to be used to log installation process
 
+pushd logs/
 formatdate=$(date +"%m_%d_%Y_%R")
 date -u > $logfile
-
+popd
 
 #Update and upgrade system packages
 function update_upgrade() { 	
@@ -37,7 +39,9 @@ function isntall_python_tools() {
 }
 
 
+pushd logs/
+update_upgrade
+
 #Appending date to logfile name
 mv $logfile ${logfile}_${formatdate}
-
-update_upgrade
+popd

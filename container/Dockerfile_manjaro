@@ -1,0 +1,5 @@
+FROM manjarolinux:base
+
+ADD setup.sh /tests/
+
+RUN /tests/setup.sh

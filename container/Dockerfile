@@ -1,5 +1,6 @@
-FROM manjaro:latest
+FROM ubuntu:latest
 
-ADD setup.sh /root/
+ADD /python_scripts/read_amg8833_pixels_colored.py /tests/
+ADD setup_ubuntu.sh /tests/
 
-RUN /root/setup.sh
+RUN /tests/setup_ubuntu.sh

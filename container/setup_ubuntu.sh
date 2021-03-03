@@ -15,7 +15,9 @@ popd
 #Update and upgrade system packages
 function update_upgrade() { 	
   apt update >> $logfile  	#Update repositories cache
-#  apt upgrade -y >> $logfile  	#Upgrade packages
+  apt upgrade -y >> $logfile  	#Upgrade packages
+  apt install apt-utils -y >> $logfile
+  apt install nano -y >> $logfile
 }
 
 #Installation of Docker if using Baremetal
@@ -31,16 +33,20 @@ function install_enable_docker() {
 #Installation of I2C tools. 
 function install_i2c_tools() {
   apt install i2c-tools -y >> $logfile
+  apt install libi2c-dev -y >> $logfile
 }
 
 #Installation of Python tools
-function isntall_python_tools() {
-  apt install python-smbus -y >> $logfile
+function install_python_tools() {
+  apt install python3 -y >> $logfile
+  apt install python3-smbus -y >> $logfile
 }
 
 
 pushd /tests/logs/
 update_upgrade
+install_i2c_tools
+install_python_tools
 
 #Appending date to logfile name
 mv $logfile ${logfile}_${formatdate}

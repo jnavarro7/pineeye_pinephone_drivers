@@ -1,34 +1,13 @@
-"""
-MIT License
-Copyright (c) 2021 Jose Navarro
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-Python script to read the pixels on the AMG8833 sensor which is a thermal imaging solution from Panasonic.
-"""
-
 import smbus
 import time
 import os
 import curses
+import sys
 
 # from amg8833_registers import * #Registers can be stored in a different file and imported here.
 
 # Sensor is in I2C channel 3
-i2c_ch = 3
+i2c_ch = 2
 
 # AMG8233 address on the I2C bus
 i2c_address = 0x68
@@ -87,23 +66,26 @@ def readrows():
             valstr = str(val)  # Convert "val" to string
             dec = int(valstr, 16)  # Convert Hexadecimal to decimal
             temp = dec * 0.25  # Convert to Celcius degress
+            if temp >= 59:
+                temp -= 29
+            else:
+                temp -= 10  # Adjust
             tempround = round(temp, 1)  # Round temperature to a single decimal point
+            # 			tempround -= 5 			#Adjust
             # print(tempround,end = " ")
             strtempround = str(tempround)  # Convert tempround to string
             # print('\x1b[6;37;44m' + strtempround + '\x1b[0m',end = " ")
-            color = ""  # Define "color" variable as empty
+            color = ""
             color = color_select(
                 tempround
             )  # Function to assign a color depending on the temperature
-            print(
-                color + strtempround + "\x1b[0m", end=" "
-            )  # Prints temperature in Celcius degress and color we have assigned depending on its range
+            print(color + strtempround + "\x1b[0m", end=" ")
             time.sleep(0.001)
         print()
 
 
-os.system("clear")  # Clean the terminal
-while True:  # Run sensor pixels read and display
+os.system("clear")
+while True:
     readrows()
-    time.sleep(0.3)
+    time.sleep(0.1)
     os.system("clear")
